@@ -60,7 +60,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 		}
 
 	}
-	
+
 	public void run() {
 		try {
 			runCore();
@@ -88,21 +88,22 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 					else if(content[0].equals("Mode"))
 						mode = Mode.getMode(content[1].replace(" ", ""));
 					else{}
-				}	 
+				}
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setParameter(mode, port);
+		this.setParameter(mode, port, this.args);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException { 
+	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
 		Class<?> clazz = Class.forName(args[0]+"$Generator");
 		GenRunnable run = (GenRunnable) clazz.newInstance();
+		run.args = args;
 		run.loadConfig("Config.conf");
 		run.run();
 		if(Flag.CountTime)
