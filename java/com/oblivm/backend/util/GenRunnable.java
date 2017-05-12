@@ -12,6 +12,8 @@ import com.oblivm.backend.flexsc.Flag;
 import com.oblivm.backend.flexsc.Mode;
 import com.oblivm.backend.flexsc.Party;
 
+import javax.swing.*;
+
 public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server implements Runnable {
 
 	Mode m;
@@ -98,16 +100,46 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 		this.setParameter(mode, port, this.args);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	/**
+	      * Create the GUI and show it.  For thread safety,
+	      * this method should be invoked from the
+	      * event-dispatching thread.
+	      */
+			private static void createAndShowGUI() {
+				//Create and set up the window.
+				JFrame frame = new JFrame("BorderDemo");
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Class<?> clazz = Class.forName(args[0]+"$Generator");
-		GenRunnable run = (GenRunnable) clazz.newInstance();
-		run.args = args;
-		run.loadConfig("Config.conf");
-		run.run();
-		if(Flag.CountTime)
-			Flag.sw.print();
+				//Create and set up the content pane.
+//        BorderDemo newContentPane = new BorderDemo();
+//        newContentPane.setOpaque(true); //content panes must be opaque
+//        frame.setContentPane(newContentPane);
+
+				//Display the window.
+				frame.pack();
+				frame.setVisible(true);
 	}
+
+	public static void main(String[] args) {
+			//Schedule a job for the event-dispatching thread:
+			//creating and showing this application's GUI.
+			javax.swing.SwingUtilities.invokeLater(() ->
+					createAndShowGUI()
+			);
+	}
+
+//	@SuppressWarnings("rawtypes")
+//	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//
+//
+//
+//		Class<?> clazz = Class.forName(args[0]+"$Generator");
+//		GenRunnable run = (GenRunnable) clazz.newInstance();
+//		run.args = args;
+//		run.loadConfig("Config.conf");
+//		run.run();
+//		if(Flag.CountTime)
+//			Flag.sw.print();
+//	}
 }
 
