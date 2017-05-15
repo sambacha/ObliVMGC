@@ -105,41 +105,39 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 	      * this method should be invoked from the
 	      * event-dispatching thread.
 	      */
-			private static void createAndShowGUI() {
-				//Create and set up the window.
-				JFrame frame = new JFrame("BorderDemo");
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-				//Create and set up the content pane.
-//        BorderDemo newContentPane = new BorderDemo();
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        frame.setContentPane(newContentPane);
-
-				//Display the window.
-				frame.pack();
-				frame.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-			//Schedule a job for the event-dispatching thread:
-			//creating and showing this application's GUI.
-			javax.swing.SwingUtilities.invokeLater(() ->
-					createAndShowGUI()
-			);
-	}
-
-//	@SuppressWarnings("rawtypes")
-//	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//			private static void createAndShowGUI() {
+//				//Create and set up the window.
+//				JFrame frame = new JFrame("BorderDemo");
+//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //
+//				//Create and set up the content pane.
+////        BorderDemo newContentPane = new BorderDemo();
+////        newContentPane.setOpaque(true); //content panes must be opaque
+////        frame.setContentPane(newContentPane);
 //
-//
-//		Class<?> clazz = Class.forName(args[0]+"$Generator");
-//		GenRunnable run = (GenRunnable) clazz.newInstance();
-//		run.args = args;
-//		run.loadConfig("Config.conf");
-//		run.run();
-//		if(Flag.CountTime)
-//			Flag.sw.print();
+//				//Display the window.
+//				frame.pack();
+//				frame.setVisible(true);
 //	}
+
+//	public static void main(String[] args) {
+//			//Schedule a job for the event-dispatching thread:
+//			//creating and showing this application's GUI.
+//			javax.swing.SwingUtilities.invokeLater(() ->
+//					createAndShowGUI()
+//			);
+//	}
+
+	@SuppressWarnings("rawtypes")
+	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+		Class<?> clazz = Class.forName(args[0]+"$Generator");
+		GenRunnable run = (GenRunnable) clazz.newInstance();
+		run.args = args;
+		run.loadConfig("Config.conf");
+		run.run();
+		if(Flag.CountTime)
+			Flag.sw.print();
+	}
 }
 
