@@ -18,7 +18,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 
 	Mode m;
 	int port;
-	protected String[] args;
+	public String[] args;
 	public boolean verbose = true;
 	public void setParameter(Mode m, int port, String[] args) {
 		this.m = m;

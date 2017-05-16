@@ -9,7 +9,7 @@ import com.oblivm.backend.util.Utils;
 
 import java.math.BigInteger;
 
-public class WeightedAverage {
+public class AddingFunction {
 
     static int a1 = 1;
     static int a2 = 1;
@@ -20,8 +20,29 @@ public class WeightedAverage {
         return new IntegerLib<T>(gen).add(inputA, inputB);
     }
 
-    static String binary(byte[] bytes, int radix) {
-        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数
+    private static int bytesToInt(byte[] src, int offset) {
+        int value;
+        value = (int) ((src[offset] & 0xFF)
+                | ((src[offset + 1] & 0xFF) << 8)
+                | ((src[offset + 2] & 0xFF) << 16)
+                | ((src[offset + 3] & 0xFF) << 24));
+        return value;
+    }
+
+    private static byte[] convertBool2Byte(boolean[] booleanArray) {
+        byte[] byteResult = new byte[32];
+//            System.out.println(eva.outputToBob(scResult));
+        for (int i = 0; i < booleanArray.length; i++) {
+            byte b;
+            if (booleanArray[i]) {
+                b = 1;
+            } else {
+                b = 0;
+            }
+//                byteResult[result.length - i - 1] = b;
+            byteResult[i] = b;
+        }
+        return byteResult;
     }
 
     public static class Generator<T> extends GenRunnable<T> {
@@ -52,6 +73,15 @@ public class WeightedAverage {
 //            System.out.println(gen.outputToAlice(scResult));
 
             boolean[] result = gen.outputToAlice(scResult);
+            byte[] byteResult = convertBool2Byte(result);
+            for (int i = 0; i < byteResult.length; i++) {
+                System.out.print(byteResult[i]);
+            }
+            System.out.println();
+
+            int finalResult = bytesToInt(byteResult, 0);
+            AddingGenerator.output = finalResult;
+
 //            System.out.println(eva.outputToBob(scResult));
             for (int i = 0; i < result.length; i++) {
                 System.out.print(result[i] ? 1 : 0);
@@ -82,26 +112,18 @@ public class WeightedAverage {
 
         @Override
         public void prepareOutput(CompEnv<T> eva) throws BadLabelException {
-
             eva.outputToAlice(scResult);
             boolean[] result = eva.outputToBob(scResult);
-            byte[] byteResult = new byte[32];
-//            System.out.println(eva.outputToBob(scResult));
-            for (int i = 0; i < result.length; i++) {
-                byte b;
-                if (result[i]) {
-                    b = 1;
-                } else {
-                    b = 0;
-                }
-                byteResult[result.length - i - 1] = b;
+            byte[] byteResult = convertBool2Byte(result);
 
-            }
-            for (int i = 0;i<byteResult.length;i++) {
+            for (int i = 0; i < byteResult.length; i++) {
                 System.out.print(byteResult[i]);
             }
             System.out.println();
-//            System.out.println(binary(byteResult, 64));
+
+            int finalResult = bytesToInt(byteResult, 0);
+            AddingEvaluator.output = finalResult;
+            System.out.println(finalResult);
         }
     }
 }

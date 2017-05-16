@@ -19,7 +19,7 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 	Mode m;
 	int port;
 	String host;
-	protected String[] args;
+	public String[] args;
 	public boolean verbose = true;
 
 	public void setParameter(Mode m, String host, int port, String[] args){
