@@ -20,12 +20,11 @@ public class AddingFunction {
         return new IntegerLib<T>(gen).add(inputA, inputB);
     }
 
-    private static int bytesToInt(byte[] src, int offset) {
-        int value;
-        value = (int) ((src[offset] & 0xFF)
-                | ((src[offset + 1] & 0xFF) << 8)
-                | ((src[offset + 2] & 0xFF) << 16)
-                | ((src[offset + 3] & 0xFF) << 24));
+    private static int bytesToInt(byte[] src) {
+        int value = 0;
+        for (int i = 0; i < src.length; i++) {
+            if (src[i] == 1) value += Math.pow(2, i);
+        }
         return value;
     }
 
@@ -79,7 +78,7 @@ public class AddingFunction {
             }
             System.out.println();
 
-            int finalResult = bytesToInt(byteResult, 0);
+            int finalResult = bytesToInt(byteResult);
             AddingGenerator.output = finalResult;
 
 //            System.out.println(eva.outputToBob(scResult));
@@ -121,7 +120,7 @@ public class AddingFunction {
             }
             System.out.println();
 
-            int finalResult = bytesToInt(byteResult, 0);
+            int finalResult = bytesToInt(byteResult);
             AddingEvaluator.output = finalResult;
             System.out.println(finalResult);
         }
