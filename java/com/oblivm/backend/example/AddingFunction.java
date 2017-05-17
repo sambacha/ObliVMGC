@@ -16,8 +16,9 @@ public class AddingFunction {
     static int a3 = 1;
     static int a4 = 1;
 
-    static public <T> T[] compute(CompEnv<T> gen, T[] inputA, T[] inputB) {
-        return new IntegerLib<T>(gen).add(inputA, inputB);
+    static public <T> T[] compute(CompEnv<T> gen, T[] inputA, T[] inputB, T[] inputC, T[] inputD) {
+        IntegerLib<T> lib = new IntegerLib<T>(gen);
+        return lib.add(lib.multiply(inputA, inputC), lib.multiply(inputB, inputD));
     }
 
     private static int bytesToInt(byte[] src) {
@@ -48,21 +49,25 @@ public class AddingFunction {
 
         T[] inputA;
         T[] inputB;
+        T[] inputC;
+        T[] inputD;
         T[] scResult;
 
         @Override
         public void prepareInput(CompEnv<T> gen) {
-            int x1 = Integer.parseInt(args[1]) * a1;
-            int x2 = Integer.parseInt(args[2]) * a2;
-            inputA = gen.inputOfAlice(Utils.fromInt(new Integer(x1 + x2), 32));
+            int x1 = Integer.parseInt(args[1]);
+            int x2 = Integer.parseInt(args[2]);
+            inputA = gen.inputOfAlice(Utils.fromInt(new Integer(x1), 32));
+            inputB = gen.inputOfAlice(Utils.fromInt(new Integer(x2), 32));
             gen.flush();
-            inputB = gen.inputOfBob(new boolean[32]);
+            inputC = gen.inputOfBob(new boolean[32]);
+            inputD = gen.inputOfBob(new boolean[32]);
         }
 
         @Override
         public void secureCompute(CompEnv<T> gen) {
 
-            scResult = compute(gen, inputA, inputB);
+            scResult = compute(gen, inputA, inputB, inputC, inputD);
         }
 
         @Override
@@ -92,21 +97,25 @@ public class AddingFunction {
     public static class Evaluator<T> extends EvaRunnable<T> {
         T[] inputA;
         T[] inputB;
+        T[] inputC;
+        T[] inputD;
         T[] scResult;
 
         @Override
         public void prepareInput(CompEnv<T> eva) {
-            int x1 = Integer.parseInt(args[1]) * a3;
-            int x2 = Integer.parseInt(args[2]) * a4;
+            int x1 = Integer.parseInt(args[1]);
+            int x2 = Integer.parseInt(args[2]);
             inputA = eva.inputOfAlice(new boolean[32]);
+            inputB = eva.inputOfAlice(new boolean[32]);
             eva.flush();
-            inputB = eva.inputOfBob(Utils.fromInt(new Integer(x1 + x2), 32));
+            inputC = eva.inputOfBob(Utils.fromInt(new Integer(x1), 32));
+            inputD = eva.inputOfBob(Utils.fromInt(new Integer(x2), 32));
         }
 
         @Override
         public void secureCompute(CompEnv<T> eva) {
 
-            scResult = compute(eva, inputA, inputB);
+            scResult = compute(eva, inputA, inputB, inputC, inputD);
         }
 
         @Override
