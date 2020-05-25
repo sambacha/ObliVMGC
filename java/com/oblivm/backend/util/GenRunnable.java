@@ -35,7 +35,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 
 	public void runCore() throws Exception {
 		if(verbose)
-			System.out.println("connecting");
+			System.out.println("listening on port " + port);
 		listen(port);
 		if(verbose)
 			System.out.println("connected");
@@ -70,7 +70,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 		}
 	}
 
-	public void loadConfig(String configFile) {
+	public void loadConfig(String configFile, String[] args) {
 		File file = new File(configFile);
 
 		Scanner scanner;
@@ -95,7 +95,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setParameter(mode, port);
+		this.setParameter(mode, port, args);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -103,7 +103,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 
 		Class<?> clazz = Class.forName(args[0]+"$Generator");
 		GenRunnable run = (GenRunnable) clazz.newInstance();
-		run.loadConfig("Config.conf");
+		run.loadConfig("ConfigGen.conf", args);
 		run.run();
 		if(Flag.CountTime)
 			Flag.sw.print();
