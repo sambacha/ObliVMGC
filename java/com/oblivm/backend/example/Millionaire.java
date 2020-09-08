@@ -22,7 +22,7 @@ public class Millionaire {
 		
 		@Override
 		public void prepareInput(CompEnv<T> gen) {
-			inputA = gen.inputOfAlice(Utils.fromInt(new Integer(args[0]), 32));
+			inputA = gen.inputOfAlice(Utils.fromInt(new Integer(args[1]), 32));
 			gen.flush();
 			inputB = gen.inputOfBob(new boolean[32]);
 		}
@@ -47,7 +47,7 @@ public class Millionaire {
 		public void prepareInput(CompEnv<T> gen) {
 			inputA = gen.inputOfAlice(new boolean[32]);
 			gen.flush();
-			inputB = gen.inputOfBob(Utils.fromInt(new Integer(args[0]), 32));
+			inputB = gen.inputOfBob(Utils.fromInt(new Integer(args[1]), 32));
 		}
 		
 		@Override

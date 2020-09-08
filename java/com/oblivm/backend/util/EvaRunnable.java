@@ -37,7 +37,7 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 
 	public void runCore() throws Exception {
 		if(verbose)
-			System.out.println("connecting");
+			System.out.println("connecting to " + host + ":" + port);
 		connect(host, port);
 		if(verbose)
 			System.out.println("connected");
@@ -71,11 +71,8 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 		}
 	}
 
-	public void loadConfig() {
-		loadConfig("Config.conf");
-	}
 	
-	public void loadConfig(String fileName) {
+	public void loadConfig(String fileName, String[] args) {
 		File file = new File(fileName);
 		Scanner scanner;
 		String host = null;
@@ -103,7 +100,7 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 			e.printStackTrace();
 		}
 		
-		this.setParameter(mode, host, port);
+		this.setParameter(mode, host, port, args);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -111,8 +108,8 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 
 		Class<?> clazz = Class.forName(args[0]+"$Evaluator");
 		EvaRunnable run = (EvaRunnable) clazz.newInstance();
+		run.loadConfig("ConfigEva.conf",args);
 		run.run();
-		run.loadConfig();
 		if(Flag.CountTime)
 			Flag.sw.print();
 		if(Flag.countIO)

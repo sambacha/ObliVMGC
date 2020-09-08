@@ -43,13 +43,13 @@ public class Cmd {
 
 		if(ns.getString("type").equals("gen")) {
 			GenRunnable gen = new MainRunnable.Generator(ns.getString("class"), ns.getString("input"));
-			gen.loadConfig(ns.getString("config"));
+			gen.loadConfig(ns.getString("config"), args);
 			gen.runCore();
 			if(Flag.CountTime)
 				Flag.sw.print();
 		} else {
 			EvaRunnable eva = new MainRunnable.Evaluator(ns.getString("class"), ns.getString("input"));
-			eva.loadConfig(ns.getString("config"));
+			eva.loadConfig(ns.getString("config"), args);
 			eva.runCore();
 			if(Flag.CountTime)
 				Flag.sw.print();
