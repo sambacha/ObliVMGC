@@ -12,11 +12,13 @@ import com.oblivm.backend.flexsc.Flag;
 import com.oblivm.backend.flexsc.Mode;
 import com.oblivm.backend.flexsc.Party;
 
+import javax.swing.*;
+
 public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server implements Runnable {
 
 	Mode m;
 	int port;
-	protected String[] args;
+	public String[] args;
 	public boolean verbose = true;
 	public void setParameter(Mode m, int port, String[] args) {
 		this.m = m;
@@ -60,7 +62,7 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 		}
 
 	}
-	
+
 	public void run() {
 		try {
 			runCore();
@@ -88,18 +90,46 @@ public abstract class GenRunnable<T> extends com.oblivm.backend.network.Server i
 					else if(content[0].equals("Mode"))
 						mode = Mode.getMode(content[1].replace(" ", ""));
 					else{}
-				}	 
+				}
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setParameter(mode, port, args);
+		this.setParameter(mode, port, this.args);
 	}
-	
+
+	/**
+	      * Create the GUI and show it.  For thread safety,
+	      * this method should be invoked from the
+	      * event-dispatching thread.
+	      */
+//			private static void createAndShowGUI() {
+//				//Create and set up the window.
+//				JFrame frame = new JFrame("BorderDemo");
+//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//				//Create and set up the content pane.
+////        BorderDemo newContentPane = new BorderDemo();
+////        newContentPane.setOpaque(true); //content panes must be opaque
+////        frame.setContentPane(newContentPane);
+//
+//				//Display the window.
+//				frame.pack();
+//				frame.setVisible(true);
+//	}
+
+//	public static void main(String[] args) {
+//			//Schedule a job for the event-dispatching thread:
+//			//creating and showing this application's GUI.
+//			javax.swing.SwingUtilities.invokeLater(() ->
+//					createAndShowGUI()
+//			);
+//	}
+
 	@SuppressWarnings("rawtypes")
-	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException { 
+	public static void main(String[] args) throws ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
 		Class<?> clazz = Class.forName(args[0]+"$Generator");
 		GenRunnable run = (GenRunnable) clazz.newInstance();

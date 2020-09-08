@@ -19,7 +19,7 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 	Mode m;
 	int port;
 	String host;
-	protected String[] args;
+	public String[] args;
 	public boolean verbose = true;
 
 	public void setParameter(Mode m, String host, int port, String[] args){
@@ -61,7 +61,7 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 			System.out.println("Number Of AND Gates:"+env.numOfAnds);
 		}
 	}
-	
+
 	public void run() {
 		try {
 			runCore();
@@ -71,8 +71,11 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 		}
 	}
 
-	
-	public void loadConfig(String fileName, String[] args) {
+	public void loadConfig() {
+		loadConfig("Config.conf");
+	}
+
+	public void loadConfig(String fileName) {
 		File file = new File(fileName);
 		Scanner scanner;
 		String host = null;
@@ -94,21 +97,22 @@ public abstract  class EvaRunnable<T> extends com.oblivm.backend.network.Client 
 					else{}
 				}
 			}
-			scanner.close();			
+			scanner.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		this.setParameter(mode, host, port, args);
+
+		this.setParameter(mode, host, port, this.args);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ParseException, ClassNotFoundException {
 
 		Class<?> clazz = Class.forName(args[0]+"$Evaluator");
 		EvaRunnable run = (EvaRunnable) clazz.newInstance();
-		run.loadConfig("ConfigEva.conf",args);
+		run.args = args;
+		run.loadConfig();
 		run.run();
 		if(Flag.CountTime)
 			Flag.sw.print();
