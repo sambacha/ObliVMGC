@@ -46,10 +46,10 @@ public class Millionaire {
 		T scResult;
 
 		@Override
-		public void prepareInput(CompEnv<T> eva) {
-			inputA = eva.inputOfAlice(new boolean[32]);
-			eva.flush();
-			inputB = eva.inputOfBob(Utils.fromInt(new Integer(args[1]), 32));
+		public void prepareInput(CompEnv<T> gen) {
+			inputA = gen.inputOfAlice(new boolean[32]);
+			gen.flush();
+			inputB = gen.inputOfBob(Utils.fromInt(new Integer(args[1]), 32));
 		}
 
 		@Override

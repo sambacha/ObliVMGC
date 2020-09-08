@@ -6,9 +6,9 @@ package com.oblivm.backend.flexsc;
 import com.oblivm.backend.util.StopWatch;
 
 public class Flag {
-	public static boolean CountTime = false;
+	public static boolean CountTime = true;
 	public static StopWatch sw = new StopWatch(CountTime);
-	public static boolean countIO = false;
+	public static boolean countIO = true;
 	public static boolean FakeOT = true;
 	public static boolean ProprocessOT = false;
 	public static int OTBlockSize = 1024*64;
