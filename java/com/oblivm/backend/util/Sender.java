@@ -8,7 +8,7 @@ public class Sender<T> extends com.oblivm.backend.network.Client implements Runn
 
 	public void run() {
 		try {
-			connect("192.168.1.102", 54321);
+			connect("127.0.0.1", 54321);
 			System.out.println("connected");
 
 			while(true) {
